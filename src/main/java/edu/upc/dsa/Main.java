@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.net.URI;
 
 /**
- * Main class.
+ * Main class.3
  *
  */
 public class Main {
@@ -29,7 +29,7 @@ public class Main {
 
         rc.register(io.swagger.jaxrs.listing.ApiListingResource.class);
         rc.register(io.swagger.jaxrs.listing.SwaggerSerializers.class);
-
+        //hello world
         BeanConfig beanConfig = new BeanConfig();
 
         beanConfig.setHost("localhost:8080");

@@ -18,7 +18,7 @@ public class ProductManagerImpTest {
     public void setUp() {
 
         scenario = ProductManagerImpl.getInstance();
-        scenario.addProduct(new Product("agua", 1, 10));
+        scenario.addProduct(new Product("agua", 2, 10));
         scenario.addProduct(new Product("llet", 2, 5));
         scenario.addProduct(new Product("pa", 0.5, 15));
         scenario.addProduct(new Product("patata", 3, 8));

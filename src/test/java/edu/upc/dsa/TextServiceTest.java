@@ -38,7 +38,7 @@ public class TextServiceTest {
     }
 
     /**
-     * Test to see that the message "Got it!" is sent in the response.
+     * Test to see that the message "Got it!" is sent in the response. 1
      */
     @Test
     public void testGetIt() {

@@ -13,7 +13,7 @@ public class Order {
         this.productList = new ArrayList<Product>();
     }
 
-
+    public Order(){}
 
     public User getUser() {
         return user;

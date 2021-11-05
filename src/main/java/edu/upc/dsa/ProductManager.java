@@ -12,7 +12,7 @@ public interface ProductManager {
     List<Product> getProductsByPrice();
     void doOrder(Order order);
     void serveOrder();
-    List<Order> getOrdersByUser(User user);
+    List<Order> getOrdersByUser(String user);
     List<Product> getProductsBySales();
     void addProduct(Product product);
 

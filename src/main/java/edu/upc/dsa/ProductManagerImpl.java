@@ -12,6 +12,7 @@ public class ProductManagerImpl implements ProductManager {
     public List<Product> productsList = new ArrayList<>();
     public Queue<Order> ordersList = new LinkedList<>();
     public HashMap<String,User> users = new HashMap<String,User>();
+    //public List<User> users = new ArrayList<>();
     private int sellCount;
 
     final static Logger logger = Logger.getLogger(String.valueOf(ProductManagerImpl.class));
@@ -82,10 +83,21 @@ public class ProductManagerImpl implements ProductManager {
     }
 
     @Override
-    public List<Order> getOrdersByUser(User user) {
-        List<Order> list = user.orderList;
+    public List<Order> getOrdersByUser(String user) {
 
-        return list;
+            List<Order> list = new ArrayList<>();
+
+            int j = 0;
+            Boolean found = false;
+            while(!found && j < ordersList.size()) {
+                Order served = ordersList.poll();
+                if( served.getUser().getName() == user) {
+                    found = true;
+                    list.add(served);
+                }
+                j++;
+            }
+            return list;
     }
 
     @Override

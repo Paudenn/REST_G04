@@ -53,7 +53,7 @@ public class ProductManagerImpTest {
         Assert.assertEquals(0.5,productList.get(0).getPrice(), 0.01);
         Assert.assertEquals(0.5,productList.get(1).getPrice(), 0.01);
         Assert.assertEquals(1,productList.get(2).getPrice(), 0.01);
-        Assert.assertEquals(1,productList.get(3).getPrice(), 0.01);
+        Assert.assertEquals(2,productList.get(3).getPrice(), 0.01);
     }
     @Test
     public void doOrder(){
@@ -84,8 +84,8 @@ public class ProductManagerImpTest {
     @Test
     public  void getProductListByName()
     {
-        scenario.getOrdersByUser(scenario.getUser().get("Pau"));
-        Assert.assertEquals(1,scenario.getOrdersByUser(scenario.getUser().get("Pau")).size());
+        List<Order> list = scenario.getOrdersByUser("Pau");
+        Assert.assertEquals(1,list.size());
     }
 
 

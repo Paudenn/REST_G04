@@ -44,16 +44,16 @@ public class ProductService {
 
 
     @POST
-    @ApiOperation(value = "Apply Product", notes = "Apply Product")
+    @ApiOperation(value = "AddProduct", notes = "Add Product")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Order.class),
+            @ApiResponse(code = 201, message = "Successful", response = Product.class),
             @ApiResponse(code = 500, message = "Validation Error")
     })
-    @Path("/Producto/")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/")
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response addProduct(Product product) {
 
-        if (product.getAmount()==0 || product.getName()==null || product.getPrice()==0 || product.getSells()==0) return Response.status(500).entity(product).build();
+        if (product.getName()==null || product.getAmount()==0 ) return Response.status(500).entity(product).build();
         this.scenario.addProduct(product);
         return Response.status(201).entity(product).build()  ;
 
@@ -86,20 +86,20 @@ public class ProductService {
         if (list == null) return Response.status(404).build();
         else  return Response.status(201).entity(list).build();
     }
-/*
+
     @GET
     @ApiOperation(value = "Get order by users", notes = "Get order by users")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Product.class, responseContainer = "List"),
             @ApiResponse(code = 404, message = "Products not found")
     })
-    /*
+
     @Path("/OrderByUsers/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getOrdersByUser(@PathParam("id") String user) {
-        //List<Order> list = scenario.getOrdersByUser(user);
-        //if (list == null) return Response.status(404).build();
-        //else  return Response.status(201).entity(list).build();
+        List<Order> list = scenario.getOrdersByUser(user);
+        if (list == null) return Response.status(404).build();
+        else  return Response.status(201).entity(list).build();
     }
 /*
     @DELETE

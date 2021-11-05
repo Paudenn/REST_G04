@@ -12,7 +12,7 @@ public class Product {
         this.amount = amount;
 
     }
-
+    public Product(){}
     public String getName() {
         return name;
     }

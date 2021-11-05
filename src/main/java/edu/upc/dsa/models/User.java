@@ -18,7 +18,7 @@ public class User {
         this.id = id;
         orderList = new ArrayList<>();
     }
-
+    public User(){}
     public String getName() {
         return name;
     }

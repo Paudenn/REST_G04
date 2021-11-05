@@ -86,19 +86,20 @@ public class ProductService {
         if (list == null) return Response.status(404).build();
         else  return Response.status(201).entity(list).build();
     }
-
+/*
     @GET
     @ApiOperation(value = "Get order by users", notes = "Get order by users")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Product.class, responseContainer = "List"),
             @ApiResponse(code = 404, message = "Products not found")
     })
-    @Path("/OrderByUsers/")
+    /*
+    @Path("/OrderByUsers/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getOrdersByUser(@PathParam("id") User user) {
-        List<Order> list = scenario.getOrdersByUser(user);
-        if (list == null) return Response.status(404).build();
-        else  return Response.status(201).entity(list).build();
+    public Response getOrdersByUser(@PathParam("id") String user) {
+        //List<Order> list = scenario.getOrdersByUser(user);
+        //if (list == null) return Response.status(404).build();
+        //else  return Response.status(201).entity(list).build();
     }
 /*
     @DELETE

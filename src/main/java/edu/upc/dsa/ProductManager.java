@@ -17,8 +17,8 @@ public interface ProductManager {
     void addProduct(Product product);
 
     int getNumProducts();
-    void addUser(User user);
-    HashMap<String,User> getUser();
+    void addUser(String user, String id);
+    User getUser(String user);
     int getOrderAmount();
     List<Product> getProductsList();
     Queue<Order> getOrdersList();

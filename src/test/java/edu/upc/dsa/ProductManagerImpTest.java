@@ -26,8 +26,8 @@ public class ProductManagerImpTest {
         scenario.addProduct(new Product("cafe",5.0,18));
         scenario.addProduct(new Product("bocata",6.4,13));
 
-        scenario.addUser(new User("Pau","321"));
-        Order fisrtOrder = new Order(scenario.getUser().get("Pau"));
+        scenario.addUser("Pau","321");
+        Order fisrtOrder = new Order(scenario.getUser("Pau"));
         fisrtOrder.addLP(new Product("pa",0.5,4));
         scenario.doOrder(fisrtOrder);
     }
@@ -63,8 +63,8 @@ public class ProductManagerImpTest {
         // 1 bocata llom
         Assert.assertEquals(1, scenario.getOrderAmount());
 
-        scenario.addUser(new User("Gilbert","123"));
-        Order order = new Order(scenario.getUser().get("Gilbert"));
+        scenario.addUser("Gilbert","123");
+        Order order = new Order(scenario.getUser("Gilbert"));
         order.addLP(new Product("donut",2.2,2));
         order.addLP(new Product("cafe",5.0,1));
         order.addLP(new Product("bocata",6.4,1));

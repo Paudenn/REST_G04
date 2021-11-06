@@ -19,6 +19,7 @@ public class Order {
         return user;
     }
 
+
     public void setUser(User user) {
         this.user = user;
     }
@@ -35,5 +36,13 @@ public class Order {
     public void addLP(Product product) {
 
         productList.add(product);
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "user=" + user +
+                ", productList=" + productList +
+                '}';
     }
 }

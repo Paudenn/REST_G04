@@ -42,16 +42,17 @@ public class ProductManagerImpl implements ProductManager {
         ordersList.add(order);
         User client = order.getUser();
         client.getOrderList().add(order);
-    }
-    public void addUser(User user) {
-
-        this.users.put(user.getName(),user);
 
     }
+    public void addUser(String user, String id) {
 
-    public HashMap<String, User> getUser()
+        this.users.put(user, new User(user,id));
+
+    }
+
+    public User getUser(String user)
     {
-        return this.users;
+        return this.users.get(user);
     }
 
     public List<Product> getProductsList(){
@@ -85,19 +86,8 @@ public class ProductManagerImpl implements ProductManager {
     @Override
     public List<Order> getOrdersByUser(String user) {
 
-            List<Order> list = new ArrayList<>();
 
-            int j = 0;
-            Boolean found = false;
-            while(!found && j < ordersList.size()) {
-                Order served = ordersList.poll();
-                if( served.getUser().getName() == user) {
-                    found = true;
-                    list.add(served);
-                }
-                j++;
-            }
-            return list;
+            return users.get(user).getOrderList();
     }
 
     @Override

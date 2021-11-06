@@ -31,9 +31,11 @@ public class ProductService {
         scenario.addProduct(new Product("cafe", 5.0, 18));
         scenario.addProduct(new Product("bocata", 6.4, 13));
 
-        scenario.addUser(new User("Pau", "321"));
+        scenario.addUser("Laura", "123");
+        scenario.addUser("Alba", "231");
+        scenario.addUser("Pau", "321");
 
-        Order order = new Order(scenario.getUser().get("Pau"));
+        Order order = new Order(scenario.getUser("Pau"));
         order.addLP(new Product("pa", 0.5, 4));
         order.addLP(new Product("donut",2.2,2));
         order.addLP(new Product("cafe",5.0,1));
@@ -44,12 +46,12 @@ public class ProductService {
 
 
     @POST
-    @ApiOperation(value = "AddProduct", notes = "Add Product")
+    @ApiOperation(value = "Add a new product", notes = "Add a new product")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Product.class),
             @ApiResponse(code = 500, message = "Validation Error")
     })
-    @Path("/")
+    @Path("/addProduct")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addProduct(Product product) {
 
@@ -57,6 +59,24 @@ public class ProductService {
         this.scenario.addProduct(product);
         return Response.status(201).entity(product).build()  ;
 
+    }
+
+    @POST
+    @ApiOperation(value = "Create a new Order", notes = "Create a new Order")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response=Order.class),
+            @ApiResponse(code = 500, message = "Validation Error")
+
+    })
+
+    @Path("/doOrder/")
+    @Consumes(MediaType.APPLICATION_JSON)
+
+    public Response doOrder(Order order) {
+        Order order2 = new Order(this.scenario.getUser(order.user.getName()));
+        if (order2.getUser() == null) return Response.status(500).entity(order).build(); // solo funciona con usuarios ya establecido mas arriba!
+        this.scenario.doOrder(order2);
+        return Response.status(201).entity(order).build();
     }
 
     @GET
@@ -69,8 +89,9 @@ public class ProductService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProductsByPrice() {
         List<Product> list = scenario.getProductsByPrice();
-        if (list == null) return Response.status(404).build();
-        else  return Response.status(201).entity(list).build();
+        GenericEntity<List<Product>> entity = new GenericEntity<List<Product>>(list) {};
+        if (list.size() == 0) return Response.status(404).build();
+        return Response.status(201).entity(entity).build();
     }
 
     @GET
@@ -83,24 +104,26 @@ public class ProductService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProductsBySales() {
         List<Product> list = scenario.getProductsBySales();
-        if (list == null) return Response.status(404).build();
-        else  return Response.status(201).entity(list).build();
+        GenericEntity<List<Product>> entity = new GenericEntity<List<Product>>(list) {};
+        if (list.size() == 0) return Response.status(404).build();
+        return Response.status(201).entity(entity).build();
     }
 
     @GET
     @ApiOperation(value = "Get order by users", notes = "Get order by users")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Product.class, responseContainer = "List"),
+            @ApiResponse(code = 201, message = "Successful", response = Order.class, responseContainer = "List"),
             @ApiResponse(code = 404, message = "Products not found")
     })
 
-    @Path("/OrderByUsers/{id}")
+    @Path("/OrderByUsers/{user}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getOrdersByUser(@PathParam("id") String user) {
+    public Response getOrdersByUser(@PathParam("user") String user) {
         List<Order> list = scenario.getOrdersByUser(user);
-        if (list == null) return Response.status(404).build();
-        else  return Response.status(201).entity(list).build();
+        if (list.size() == 0) return Response.status(404).build();
+        return Response.status(201).entity(list.toString()).build();
     }
+
 /*
     @DELETE
     @ApiOperation(value = "delete a Track", notes = "asdasd")
@@ -117,8 +140,8 @@ public class ProductService {
         return Response.status(201).build();
     }
 
- */
-/*
+
+
     @PUT
     @ApiOperation(value = "New order", notes = "New order")
     @ApiResponses(value = {
@@ -137,21 +160,6 @@ public class ProductService {
 */
 
 
-    @POST
-    @ApiOperation(value = "Create a new Order", notes = "Create a new Order")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response=Order.class),
-            @ApiResponse(code = 500, message = "Validation Error")
 
-    })
-
-    @Path("/doOrder/")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response doOrder(Order order) {
-
-        if (order.getProductList()==null || order.getUser()==null)  return Response.status(500).entity(order).build();
-        this.scenario.doOrder(order);
-        return Response.status(201).entity(order).build();
-    }
 
 }

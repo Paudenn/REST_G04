@@ -13,6 +13,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 
 @Api(value = "/Products", description = "Endpoint to Track Service")
@@ -112,7 +113,7 @@ public class ProductService {
     @GET
     @ApiOperation(value = "Get order by users", notes = "Get order by users")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Order.class, responseContainer = "List"),
+            @ApiResponse(code = 201, message = "Successful", response = OrderTO.class, responseContainer = "List"),
             @ApiResponse(code = 404, message = "Products not found")
     })
 
@@ -121,7 +122,25 @@ public class ProductService {
     public Response getOrdersByUser(@PathParam("user") String user) {
         List<Order> list = scenario.getOrdersByUser(user);
         if (list.size() == 0) return Response.status(404).build();
-        return Response.status(201).entity(list.toString()).build();
+
+        System.out.println(list.toArray());
+        //
+        List<OrderTO> aux = new ArrayList<OrderTO>();
+
+        for (Order o: list) {
+            aux.add(new OrderTO(o));
+        }
+
+
+
+        GenericEntity<List<OrderTO>> entity = new GenericEntity<List<OrderTO>>(aux) {};
+        return Response.status(201).entity(entity).build()  ;
+
+        /*
+        GenericEntity<List<Track>> entity = new GenericEntity<List<Track>>(tracks) {};
+        return Response.status(201).entity(entity).build()  ;
+        */
+
     }
 
 /*
